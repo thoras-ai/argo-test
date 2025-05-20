@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: crawler
+  namespace: demo-apps
+
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 2
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: crawler
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: crawler
+    spec:
+      containers:
+      - args:
+        - |2-
+
+          import time, math
+          from datetime import datetime
+
+          def cpu_work(d):
+              end = time.time() + d
+              while time.time() < end:
+                  _ = math.sqrt(time.time())
+
+          def mem_work(m):
+              return ['x' * 1024 * 1024 for _ in range(m)]
+
+          while True:
+              now = datetime.utcnow()
+              t = now.minute * 60 + now.second
+              intensity = (math.sin(t / 3600 * 2 * math.pi) + 1) / 2
+              c_dur = 0.5 + intensity * 1.5
+              m_mb = int(50 + intensity * 150)
+              print(f"[{now}] crawler: CPU={c_dur:.2f}s, Mem={m_mb}MB")
+              cpu_work(c_dur)
+              mem = mem_work(m_mb)
+              time.sleep(5)
+              del mem
+        command:
+        - python
+        - -u
+        - -c
+        image: python:3.10-slim
+        imagePullPolicy: IfNotPresent
+        name: crawler
+        resources:
+          limits:
+            cpu: 1500m
+            memory: 3Gi
+          requests:
+            cpu: "1"
+            memory: 1Gi
