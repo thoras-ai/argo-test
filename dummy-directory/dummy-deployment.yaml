@@ -95,3 +95,30 @@ spec:
     apiVersion: apps/v1
     kind: Deployment
     name: crawler
+---
+apiVersion: thoras.ai/v1
+kind: AIScaleTarget
+metadata:
+  name: dummy-ast
+  namespace: demo-apps
+spec:
+  horizontal:
+    mode: recommendation
+  model:
+    forecast_blocks: 5m0s
+    forecast_buffer_percentage: 0%
+    forecast_cron: '*/5 * * * *'
+    mode: balanced
+  scaleTargetRef:
+    kind: Deployment
+    name: dummy-deployment
+  vertical:
+    containers:
+    - cpu:
+        lowerbound: 20m
+        upperbound: 2
+      memory:
+        lowerbound: 10Mi
+        upperbound: 2G
+      name: crawler
+    mode: recommendation
