@@ -45,7 +45,7 @@ spec:
           while True:
               now = datetime.utcnow()
               t = now.minute * 60 + now.second
-              intensity = (math.sin(t / 3600 * 2 * math.pi) + 1) / 2
+              intensity = 10
               c_dur = 0.5 + intensity * 1.5
               m_mb = int(50 + intensity * 150)
               print(f"[{now}] crawler: CPU={c_dur:.2f}s, Mem={m_mb}MB")
@@ -76,18 +76,18 @@ metadata:
   namespace: demo-apps
 
 spec:
-  maxReplicas: 2
+  maxReplicas: 5
   metrics:
   - resource:
       name: cpu
       target:
-        averageUtilization: 60
+        averageUtilization: 80
         type: Utilization
     type: Resource
   - resource:
       name: memory
       target:
-        averageUtilization: 60
+        averageUtilization: 80
         type: Utilization
     type: Resource
   minReplicas: 2
@@ -103,7 +103,7 @@ metadata:
   namespace: demo-apps
 spec:
   horizontal:
-    mode: recommendation
+    mode: auto
   model:
     forecast_blocks: 5m0s
     forecast_buffer_percentage: 0%
