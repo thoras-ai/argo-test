@@ -36,6 +36,7 @@ spec:
 
           while True:
               print("Hi!")
+              time.sleep(100)
 
       
         command:
@@ -50,7 +51,7 @@ spec:
             cpu: 1500m
             memory: 3Gi
           requests:
-            cpu: 100m
+            cpu: 300m
             memory: 100Mi
 
 ---
@@ -80,6 +81,11 @@ spec:
     apiVersion: apps/v1
     kind: Deployment
     name: crawler
+  behavior:
+    scaleDown:
+      policies:
+        stabilizationWindowSeconds: 1
+
 ---
 apiVersion: thoras.ai/v1
 kind: AIScaleTarget
