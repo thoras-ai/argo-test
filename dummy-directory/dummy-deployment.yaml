@@ -45,11 +45,9 @@ spec:
           while True:
               now = datetime.utcnow()
               t = now.minute * 60 + now.second
-              intensity = 10
-              c_dur = 0.5 + intensity * 1.5
-              m_mb = int(50 + intensity * 150)
+              m_mb = int(50)
               print(f"[{now}] crawler: CPU={c_dur:.2f}s, Mem={m_mb}MB")
-              cpu_work(c_dur)
+              cpu_work(10)
               mem = mem_work(m_mb)
               time.sleep(5)
               del mem
