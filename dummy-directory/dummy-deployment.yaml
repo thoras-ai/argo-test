@@ -34,23 +34,7 @@ spec:
           import time, math
           from datetime import datetime
 
-          def cpu_work(d):
-              end = time.time() + d
-              while time.time() < end:
-                  _ = math.sqrt(time.time())
-
-          def mem_work(m):
-              return ['x' * 1024 * 1024 for _ in range(m)]
-
-          while True:
-              now = datetime.utcnow()
-              t = now.minute * 60 + now.second
-              m_mb = int(50)
-              print(f"[{now}] crawler: CPU={c_dur:.2f}s, Mem={m_mb}MB")
-              cpu_work(10)
-              mem = mem_work(m_mb)
-              time.sleep(5)
-              del mem
+      
         command:
         - python
         - -u
