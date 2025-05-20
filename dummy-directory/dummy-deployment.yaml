@@ -77,14 +77,14 @@ spec:
         type: Utilization
     type: Resource
   minReplicas: 2
+  behavior:
+    scaleDown:
+      stabilizationWindowSeconds: 1
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
     name: crawler
-  behavior:
-    scaleDown:
-      policies:
-        stabilizationWindowSeconds: 1
+
 
 ---
 apiVersion: thoras.ai/v1
