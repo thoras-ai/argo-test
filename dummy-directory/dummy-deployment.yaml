@@ -65,8 +65,8 @@ spec:
             cpu: 1500m
             memory: 3Gi
           requests:
-            cpu: "1"
-            memory: 1Gi
+            cpu: 100m
+            memory: 100Mi
 
 ---
 apiVersion: autoscaling/v2
