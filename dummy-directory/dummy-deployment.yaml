@@ -98,7 +98,7 @@ spec:
   model:
     forecast_blocks: 5m0s
     forecast_buffer_percentage: 0%
-    forecast_cron: '*/5 * * * *'
+    forecast_cron: '0 0 29 2 *'
     mode: balanced
   scaleTargetRef:
     kind: Deployment
